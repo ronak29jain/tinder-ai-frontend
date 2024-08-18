@@ -34,22 +34,24 @@ const ProfileSelector = () => {
   </div>)
 }
 
-const MatchList = () => {
+const MatchList = ({ onSelectMatch }) => {
   return (<div className='rounded-lg shadow-lg p-4'>
     <h2 className='text-2xl font-bold mb-4'>MatchList</h2>
-    {[
-      { id: 1, firstName: 'John', lastName: 'Doe', imageUrl: './../mani_teja.jpg' },
-      { id: 2, firstName: 'Mani', lastName: 'Teja', imageUrl: './../mani_teja.jpg' },
-    ].map(match => (
-      <li key={match.id} className='mb-2'>
-        <button className='w-full rounded flex item-center hover:bg-gray-100' onClick={console.log("open chat 2")}>
-          <img src={match.imageUrl} className='w-16 h-16 rounded-full mr-3, object-cover' alt={match.firstName} />
-          <span>
-            <h3 className='font-bold'>{match.firstName} {match.lastName}</h3>
-          </span>
-        </button>
-      </li>
-    ))}
+    <ul>
+      {[
+        { id: 1, firstName: 'John', lastName: 'Doe', imageUrl: './../mani_teja.jpg' },
+        { id: 2, firstName: 'Mani', lastName: 'Teja', imageUrl: './../mani_teja.jpg' },
+      ].map(match => (
+        <li key={match.id} className='mb-2'>
+          <button className='w-full rounded flex item-center hover:bg-gray-100' onClick={onSelectMatch}>
+            <img src={match.imageUrl} className='w-16 h-16 rounded-full mr-3, object-cover' alt={match.firstName} />
+            <span>
+              <h3 className='font-bold'>{match.firstName} {match.lastName}</h3>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
   </div>)
 }
 
@@ -130,14 +132,14 @@ const ChatScreen = () => {
 
 function App() {
 
-  const [currentScreen, setCurrentScreen] = useState('Chat');
+  const [currentScreen, setCurrentScreen] = useState('Profile');
 
   const renderScreen = () => {
     switch (currentScreen) {
       case "Profile":
         return <ProfileSelector />;
       case "Matchlist":
-        return <MatchList />;
+        return <MatchList onSelectMatch={() => setCurrentScreen('Chat')} />;
       case "Chat":
         return <ChatScreen />;
       default:
